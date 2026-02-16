@@ -1,7 +1,7 @@
-"use server"
+"use server" //ye line next.js ko btatati hai ki ye file sirf server pr chalegi browser pr nhi
 
-import {db} from "@/lib/db";
-import {currentUser} from "@clerk/nextjs/server";
+import {db} from "@/lib/db"; //db is prisma database client
+import {currentUser} from "@clerk/nextjs/server"; //it works onyl on server side
 
 export const onBoardUser = async()=>{
     try{
