@@ -12,6 +12,7 @@ enum UserRole {
   ADMIN
 }
 
+
 model User {
   id    String    @id @default(uuid())
   clerkId String @unique
