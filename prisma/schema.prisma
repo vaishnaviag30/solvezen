@@ -1,13 +1,58 @@
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
-  id    Int    @id @default(autoincrement())
+  id    String    @id @default(uuid())
+  clerkId String @unique
+  username  String? @unique
   email String @unique
-  name  String?
+  role  UserRole @default(USER)
+
+  firstName String?
+  lastName String?
+  imageUrl String?
+
+  problems Problem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+enum Difficulty{
+  EASY
+  MEDIUM
+  HARD
+}
+
+model Problem{
+  id String @id @default(uuid())
+  // basic info
+  title String
+  description String
+  difficulty Difficulty
+  tags String[]
+  examples Json
+  constraints String
+  hints String?
+  editorial String?
+
+  testCases Json
+  codeSnippets Json
+  referenceSolutions Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user User @relation(fields: [userId] , references: [id] , onDelete: Cascade)
 }
